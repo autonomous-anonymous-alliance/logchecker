@@ -10,7 +10,7 @@ contract EventProof {
         bytes memory encodedPath,
         bytes memory rlpParentNodes,
         bytes32 root
-    ) public pure returns(bool) {
+    ) public view returns(bool) {
         return MerklePatriciaProof.verify(
             value, encodedPath, rlpParentNodes, root
         );
@@ -45,7 +45,7 @@ contract EventProof {
         bytes memory rlpEncodedReceipt,
         bytes memory receiptPath,
         bytes memory receiptWitness
-    ) public pure returns(bool) {
+    ) public view returns(bool) {
         if(trustedBlockhash != keccak256(rlpEncodedBlockHeader)) return false;
 
         // extract the receipts from the verified blcok header

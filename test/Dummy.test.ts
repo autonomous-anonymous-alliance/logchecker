@@ -72,7 +72,7 @@ describe('Dummy', function () {
 
 		const result = await users[0].EventProof.merkleProof(
 			receiptProof.rlpEncodedReceipt,
-			'0x01', //receiptProof.path,
+			'0x10', //receiptProof.path,
 			receiptProof.witness,
 			block.receiptsRoot
 		);

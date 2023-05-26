@@ -9,6 +9,8 @@
 pragma solidity ^0.5.11;
 import "./RLPReader.sol";
 
+import "hardhat/console.sol";
+
 library MerklePatriciaProof {
   /*
    * @dev Verifies a merkle patricia proof.
@@ -18,7 +20,7 @@ library MerklePatriciaProof {
    * @param root The root hash of the trie.
    * @return The boolean validity of the proof.
    */
-  function verify(bytes memory value, bytes memory encodedPath, bytes memory rlpParentNodes, bytes32 root) internal pure returns (bool) {
+  function verify(bytes memory value, bytes memory encodedPath, bytes memory rlpParentNodes, bytes32 root) internal view returns (bool) {
     RLPReader.RLPItem memory item = RLPReader.toRlpItem(rlpParentNodes);
     RLPReader.RLPItem[] memory parentNodes = RLPReader.toList(item);
 
@@ -29,13 +31,22 @@ library MerklePatriciaProof {
     uint pathPtr = 0;
 
     bytes memory path = _getNibbleArray(encodedPath);
-    if (path.length == 0) {return false;}
+    if (path.length == 0) {
+			console.log("path len == 0");
+			return false;
+			}
 
     for (uint i = 0; i < parentNodes.length; i++) {
-      if (pathPtr > path.length) {return false;}
+      if (pathPtr > path.length) {
+				console.log("pathPtr > path.length");
+				return false;
+			}
 
       currentNode = RLPReader.toRlpBytes(parentNodes[i]);
-      if (nodeKey != keccak256(currentNode)) {return false;}
+      if (nodeKey != keccak256(currentNode)) {
+				console.log("hash not matching 0");
+				return false;
+				}
       currentNodeList = RLPReader.toList(parentNodes[i]);
 
       if (currentNodeList.length == 17) {
@@ -43,12 +54,16 @@ library MerklePatriciaProof {
           if (keccak256(RLPReader.toBytes(currentNodeList[16])) == keccak256(value)) {
             return true;
           } else {
+						console.log("hash not matching");
             return false;
           }
         }
 
         uint8 nextPathNibble = uint8(path[pathPtr]);
-        if (nextPathNibble > 16) {return false;}
+        if (nextPathNibble > 16) {
+					console.log("nextPathNibble > 16");
+					return false;
+					}
         nodeKey = bytes32(RLPReader.toUint(currentNodeList[nextPathNibble]));
         pathPtr += 1;
       } else if (currentNodeList.length == 2) {
@@ -58,19 +73,26 @@ library MerklePatriciaProof {
           if (keccak256(RLPReader.toBytes(currentNodeList[1])) == keccak256(value)) {
             return true;
           } else {
+						console.log("hash not matching 2");
             return false;
           }
         }
         //extension node
         if (_nibblesToTraverse(RLPReader.toBytes(currentNodeList[0]), path, pathPtr) == 0) {
+					console.log("_nibblesToTraverse === 0");
           return false;
         }
 
         nodeKey = bytes32(RLPReader.toUint(currentNodeList[1]));
       } else {
+				console.log("currentNodeList.length neith 17 neither 2");
         return false;
       }
     }
+
+		if (parentNodes.length == 0) {
+			console.log("no parentn");
+		}
   }
 
   function _nibblesToTraverse(bytes memory encodedPartialPath, bytes memory path, uint pathPtr) private pure returns (uint) {
