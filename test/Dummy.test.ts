@@ -31,7 +31,10 @@ describe('Dummy', function () {
 		const tx = await users[0].Dummy.emitDummy(a, b);
 		await tx.wait();
 
-		const block = await network.provider.getBlock({blockTag: new BigNumber(tx.blockHash).toHexString()});
+		const block = await network.provider.request({
+			method: 'eth_getBlockByHash',
+			params: [tx.blockHash, false],
+		});
 		const pr = await prover.receiptProof(txHash);
 		const receiptProof = prepareReceiptProof(pr);
 
