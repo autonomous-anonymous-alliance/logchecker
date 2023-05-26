@@ -25,17 +25,18 @@ describe('Dummy', function () {
 	});
 
 	it('dummy event proved', async function () {
+		const prover = new GetProof();
 		const {users, Dummy} = await setup();
 		const a = 2;
 		const b = 3;
 		const tx = await users[0].Dummy.emitDummy(a, b);
-		await tx.wait();
+		const txReceipt = await tx.wait();
 
 		const block = await network.provider.request({
 			method: 'eth_getBlockByHash',
 			params: [tx.blockHash, false],
 		});
-		const pr = await prover.receiptProof(txHash);
+		const pr = await prover.receiptProof([txReceipt]);
 		const receiptProof = prepareReceiptProof(pr);
 
 		const result = await eventProof.functions.merkleProof(
