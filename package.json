@@ -15,6 +15,7 @@
     "chai-ethers": "^0.0.1",
     "cross-env": "^7.0.2",
     "dotenv": "^16.0.3",
+    "eip-1193": "^0.3.3",
     "eth-proof": "^2.1.6",
     "ethers": "^5.7.0",
     "fs-extra": "^11.1.0",

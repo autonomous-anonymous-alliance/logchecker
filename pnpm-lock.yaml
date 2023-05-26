@@ -37,6 +37,9 @@ devDependencies:
   dotenv:
     specifier: ^16.0.3
     version: 16.0.3
+  eip-1193:
+    specifier: ^0.3.3
+    version: 0.3.3
   eth-proof:
     specifier: ^2.1.6
     version: 2.1.6
@@ -1914,6 +1917,10 @@ packages:
     dependencies:
       jsbn: 0.1.1
       safer-buffer: 2.1.2
+    dev: true
+
+  /eip-1193@0.3.3:
+    resolution: {integrity: sha512-CQWOFlyV0MFDpnprdndZi9k7mbVQzCRNVnAITzSepwZEEArCHmvYWao19m5usapWxop4bwInYJbjjlBb2TkfLw==}
     dev: true
 
   /elliptic@6.5.4:
