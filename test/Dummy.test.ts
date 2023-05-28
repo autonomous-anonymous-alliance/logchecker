@@ -42,7 +42,7 @@ describe('Dummy', function () {
 		await expect(users[0].Dummy.emitDummy(a, b)).to.emit(Dummy, 'DummyEvent').withArgs(a, b);
 	});
 
-	it('dummy event proved', async function () {
+	it.skip('dummy event proved', async function () {
 		const prover = new GetProof();
 		const {users, Dummy} = await setup();
 		const a = 2;

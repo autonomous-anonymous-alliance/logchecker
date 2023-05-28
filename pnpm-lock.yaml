@@ -73,9 +73,15 @@ devDependencies:
   prettier-plugin-solidity:
     specifier: ^1.1.2
     version: 1.1.2(prettier@2.8.4)
+  rlp:
+    specifier: ^3.0.0
+    version: 3.0.0
   solidity-coverage:
     specifier: ^0.8.1
     version: 0.8.2(hardhat@2.12.7)
+  solidity-rlp:
+    specifier: ^2.0.8
+    version: 2.0.8
   ts-generator:
     specifier: ^0.1.1
     version: 0.1.1
@@ -4235,6 +4241,11 @@ packages:
       bn.js: 5.2.1
     dev: true
 
+  /rlp@3.0.0:
+    resolution: {integrity: sha512-PD6U2PGk6Vq2spfgiWZdomLvRGDreBLxi5jv5M8EpRo3pU6VEm31KO+HFxE18Q3vgqfDrQ9pZA3FP95rkijNKw==}
+    hasBin: true
+    dev: true
+
   /run-parallel-limit@1.1.0:
     resolution: {integrity: sha512-jJA7irRNM91jaKc3Hcl1npHsFLOXOoTkPCUL1JEa1R82O2miplXXRaGdjW/KM/98YQWDhJLiSs793CnXfblJUw==}
     dependencies:
@@ -4463,6 +4474,10 @@ packages:
       web3-utils: 1.8.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /solidity-rlp@2.0.8:
+    resolution: {integrity: sha512-gzYzHoFKRH1ydJeCfzm3z/BvKrZGK/V9+qbOlNbBcRAYeizjCdDNhLTTE8iIJrHqsRrZRSOo+7mhbnxoBoZvJQ==}
     dev: true
 
   /source-map-support@0.5.21:
@@ -5106,7 +5121,7 @@ packages:
     dev: true
 
   /xmlhttprequest@1.8.0:
-    resolution: {integrity: sha1-Z/4HXFwk/vOfnWX197f+dRcZaPw=}
+    resolution: {integrity: sha512-58Im/U0mlVBLM38NdZjHyhuMtCqa61469k2YP/AaPbvCoV9aQGUpbJBj1QRm2ytRiVQBD/fsw7L2bJGDVQswBA==}
     engines: {node: '>=0.4.0'}
     dev: true
 
