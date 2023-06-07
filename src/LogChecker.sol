@@ -15,6 +15,8 @@ contract LogChecker {
 	// --------------------------------------------------------------------------------------------
 
 	// TODO
+	// Probably a good idea to use this lib : https://github.com/lidofinance/curve-merkle-oracle/blob/main/contracts/MerklePatriciaProofVerifier.sol
+	// reason is that it uses soldiity-rlp which is maintained
     // function isReceiptPartOfBlock(
     //     bytes32 trustedBlockhash,
     //     bytes memory rlpEncodedBlockHeader,
