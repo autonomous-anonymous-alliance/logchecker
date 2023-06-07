@@ -1,6 +1,6 @@
 import {expect} from './chai-setup';
 import {ethers, deployments, getUnnamedAccounts, getNamedAccounts, network} from 'hardhat';
-import {Dummy, LogVerifierUnderTest} from '../typechain';
+import {Dummy, LogCheckerUnderTest} from '../typechain';
 import {setupUsers} from './utils';
 import {EIP1193Provider, EIP1193Block} from 'eip-1193';
 import rlp from 'rlp';
@@ -28,8 +28,8 @@ function toRLPHeader(block: EIP1193Block) {
 const setup = deployments.createFixture(async () => {
 	const {deployer} = await getNamedAccounts();
 	await deployments.fixture(['Dummy']);
-	await deployments.deploy('LogVerifier', {
-		contract: 'LogVerifierUnderTest',
+	await deployments.deploy('LogChecker', {
+		contract: 'LogCheckerUnderTest',
 		from: deployer,
 		args: [],
 		log: true,
@@ -37,7 +37,7 @@ const setup = deployments.createFixture(async () => {
 	});
 	const contracts = {
 		Dummy: <Dummy>await ethers.getContract('Dummy'),
-		LogVerifier: <LogVerifierUnderTest>await ethers.getContract('LogVerifier'),
+		LogChecker: <LogCheckerUnderTest>await ethers.getContract('LogChecker'),
 	};
 	const users = await setupUsers(await getUnnamedAccounts(), contracts);
 	return {
@@ -46,9 +46,9 @@ const setup = deployments.createFixture(async () => {
 	};
 });
 
-describe('LogVerifier', function () {
+describe('LogChecker', function () {
 	it('receiptsRoot', async function () {
-		const {users, LogVerifier} = await setup();
+		const {users, LogChecker} = await setup();
 		const a = 2;
 		const b = 3;
 		const tx = await users[0].Dummy.emitDummy(a, b);
@@ -70,7 +70,7 @@ describe('LogVerifier', function () {
 			receiptsRoot: block.receiptsRoot,
 		});
 		const rlpEncodedHeader = toRLPHeader(block);
-		const receiptRootFromVerifier = await LogVerifier.callStatic.extractReceiptsRoot(rlpEncodedHeader);
+		const receiptRootFromVerifier = await LogChecker.callStatic.extractReceiptsRoot(rlpEncodedHeader);
 
 		expect(receiptRootFromVerifier).to.equal(block.receiptsRoot);
 	});

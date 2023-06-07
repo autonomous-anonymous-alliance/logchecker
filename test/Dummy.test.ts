@@ -1,5 +1,5 @@
 import {expect} from './chai-setup';
-import {ethers, deployments, getUnnamedAccounts, network} from 'hardhat';
+import {ethers, deployments, getUnnamedAccounts, network, getNamedAccounts} from 'hardhat';
 import {Dummy, EventProof} from '../typechain';
 import {setupUsers} from './utils';
 import {EIP1193Provider} from 'eip-1193';
@@ -24,6 +24,14 @@ function prepareReceiptProof(proof: any) {
 
 const setup = deployments.createFixture(async () => {
 	await deployments.fixture(['Dummy', 'EventProof']);
+
+	const {deployer} = await getNamedAccounts();
+	await deployments.deploy('EventProof', {
+		from: deployer,
+		args: [],
+		log: true,
+		autoMine: true, // speed up deployment on local network (ganache, hardhat), no effect on live networks
+	});
 	const contracts = {
 		Dummy: <Dummy>await ethers.getContract('Dummy'),
 		EventProof: <EventProof>await ethers.getContract('EventProof'),
